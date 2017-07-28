@@ -1,0 +1,30 @@
+
+<div class = "list">
+
+<button class = "button-back" (click)="goBack()">Back</button>
+
+<form [formGroup]="clientEditForm">
+  <div>
+    <label for="companyName">ClientName</label>
+    <input type="text" formControlName = "companyName">
+    <p *ngIf="clientEditForm.get('companyName').errors" ></p>
+  </div>
+  <div>
+    <label for="contactPerson">ContactPerson</label>
+    <input type="text" formControlName = "contactPerson">
+    <p *ngIf="clientEditForm.get('contactPerson').errors" ></p>
+ </div>
+  <div>
+    <label for="contactEmail">ContactEmail</label>
+    <input type="text" formControlName = "contactEmail">
+    <p *ngIf="clientEditForm.get('contactEmail').errors" ></p>
+  </div>
+  <div>
+    <label for="contactPhone" >ContactPhone</label>
+    <input type="text" formControlName = "contactPhone">
+    <p *ngIf="clientEditForm.get('contactPhone').errors" ></p>
+  </div>
+  <button class = "submit" type = "submit" (click)="onSubmit()" [disabled]="!clientEditForm.valid">Save</button>
+  <button (click) = "onCancel()">Cancel</button>
+</form>
+</div>

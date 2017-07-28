@@ -1,0 +1,10 @@
+<div>
+  <button (click)="goBack()">Back</button>
+
+  <div *ngIf="clientData$ | async as clientData" >
+    <p> companyName: {{ clientData.name }} </p>
+    <p>email: {{ clientData.contactEmail }}</p>
+    <p>phone: {{ clientData.contactPhone }} </p>
+    <p>ContactPerson: {{ clientData.contactPerson }}</p>
+  </div>
+</div>

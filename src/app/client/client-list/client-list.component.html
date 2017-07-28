@@ -1,0 +1,14 @@
+<div class="list">
+  <h1>Clients</h1>
+  <span>
+    <button (click)="addNew()" class="button" id="new">New</button>
+    <input type="search" class="search" placeholder="Search...">
+  </span>
+  <table class="table" *ngIf="clientData$ | async as clientData" >
+    <tr *ngFor="let item of clientData" style="width:50%">
+      <td>{{ item.name }}</td>
+      <td><a [routerLink]="['edit', item.id]">Edit</a></td>
+      <td><a [routerLink]="['view', item.id]">View </a></td>
+    </tr>
+  </table>
+</div>
