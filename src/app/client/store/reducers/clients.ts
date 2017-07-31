@@ -1,13 +1,12 @@
 import { Client } from 'app/client/client';
 import * as clientActions from './../actions/actions';
 import { ClientStateRecord, IClientState } from './../states/client.state';
-import { ClientActions } from 'app/client/store/actions/actions';
 
 export const initialState: IClientState = new ClientStateRecord() as IClientState;
 
-export function reducer(
+export function ClientReducer(
   state = initialState,
-  action: ClientActions): IClientState {
+  action: clientActions.Actions): IClientState {
   switch (action.type) {
 
     case clientActions.GET_CLIENT_SUCCESS: {
@@ -18,19 +17,20 @@ export function reducer(
 
       return state.merge({
         clientIds: ids.push(action.payload.id),
-        clientEntities: entities.merge({ [id]: client })
+        clientEntities: entities.merge({ [id]: client }),
+        selectedClient: action.payload
       }) as IClientState
     }
 
     case clientActions.GET_ALL_CLIENTS_SUCCESS: {
       const clients = action.payload as Client[];
       const clientIds = clients.map( (clientData) => clientData.id );
+
       const clientEntities = clients.reduce( (_clients: { [id: string]: Client }, client: Client ) => {
         return Object.assign(_clients, {
           [client.id]: client
         });
       }, { });
-
       return state.merge({
         clientIds: clientIds,
         clientEntities: clientEntities
@@ -48,6 +48,14 @@ export function reducer(
         clientEntities: entities.merge({ [id]: client })
       }) as IClientState
     }
+    default:
+      return state;
   }
 }
+
+
+export const getEntities = (state: IClientState) => state.clientEntities.toJS();
+export const getIds = (state: IClientState) => state.clientIds.toJS();
+export const getSelectedClient = (state: IClientState) => state.selectedClient;
+export const getSelectedClientId = (state: IClientState) => state.selectedClientId;
 

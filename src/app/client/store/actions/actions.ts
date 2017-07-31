@@ -20,7 +20,7 @@ export class GetClientSuccessAction implements Action {
 
 export class GetAllClientsAction implements Action {
   readonly type = GET_ALL_CLIENTS;
-  constructor( public payload: any ) { }
+  constructor() { }
 }
 
 export class GetAllClientsSuccessAction implements Action {
@@ -38,7 +38,7 @@ export class SaveDataSuccessAction implements Action {
   constructor( public payload: Client ) { }
 }
 
-export type ClientActions =
+export type Actions =
   GetClientAction
   | GetClientSuccessAction
   | GetAllClientsAction

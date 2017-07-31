@@ -13,7 +13,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./client-edit.component.scss']
 })
 export class ClientEditComponent implements OnInit, OnDestroy {
-  id: number;
+  id: string;
   clientEditForm: FormGroup;
   subscription: Subscription;
   clientData: Observable<Client>;
@@ -29,7 +29,7 @@ export class ClientEditComponent implements OnInit, OnDestroy {
       .subscribe((params: any) => {
         this.id = params['id'];
         if (params['id']) {
-        this.clientService.getClient(Number(this.id))
+        this.clientService.getClient(this.id)
           .subscribe((data: Client) => {
             this.clientEditForm = this.initForm(data);
           });

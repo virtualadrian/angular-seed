@@ -1,9 +1,13 @@
+import * as fromClientSelector from './../store/reducers/selector';
+import { GetAllClientsAction } from './../store/actions/actions';
+import * as fromClient from './../store/reducers/index';
+import * as actions from 'app/client/store/actions/actions';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ClientService } from './../client.service';
 import { Component, OnInit } from '@angular/core';
 import { Client } from 'app/client/client';
-
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-client-list',
@@ -13,10 +17,12 @@ import { Client } from 'app/client/client';
 export class ClientListComponent implements OnInit {
 
   clientData$: Observable<Client[]>;
-  constructor(private clientService: ClientService, private router: Router) { }
+  constructor(private store: Store<fromClient.State>, private router: Router) {
+    this.clientData$ = this.store.select(fromClientSelector.getClients);
+  }
 
   ngOnInit() {
-    this.clientData$ = this.clientService.getClients();
+    this.store.dispatch( new actions.GetAllClientsAction() );
   }
 
   addNew() {

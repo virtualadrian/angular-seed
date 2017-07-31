@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./client-detail.component.scss']
 })
 export class ClientDetailComponent implements OnInit {
-  id: number;
+  id: string;
   clientData$: Observable<Client>;
   subscription: Subscription;
   constructor(private cartService: ClientService,
@@ -21,7 +21,7 @@ export class ClientDetailComponent implements OnInit {
     this.subscription = this.activatedRoute.params
       .subscribe((params: any) => {
         this.id = params['id'];
-        this.clientData$ = this.cartService.getClient(Number(this.id));
+        this.clientData$ = this.cartService.getClient( this.id );
       })
   }
 
