@@ -1,3 +1,9 @@
+import { GetClientAction } from './../store/actions/actions';
+import { ClientState } from './../store/reducers/index';
+import * as fromClient from './../store/reducers/index';
+import * as fromClientSelector from './../store/reducers/selector';
+import * as actions from 'app/client/store/actions/actions';
+import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { Client } from 'app/client/client';
@@ -13,42 +19,45 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./client-edit.component.scss']
 })
 export class ClientEditComponent implements OnInit, OnDestroy {
-  id: string;
   clientEditForm: FormGroup;
-  subscription: Subscription;
-  clientData: Observable<Client>;
+  routeSub$: Subscription;
+  clientSub$: Subscription;
+  clientData$: Observable<Client>;
+  clientData: Client;
+  isFormSubmit = false;
 
   constructor(private clientService: ClientService,
     private activatedRoute: ActivatedRoute,
-    private formGroup: FormBuilder,
+    private fb: FormBuilder,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private store: Store<fromClient.ClientState>
   ) {
-    this.initForm();
-    this.subscription = this.activatedRoute.params
-      .subscribe((params: any) => {
-        this.id = params['id'];
-        if (params['id']) {
-        this.clientService.getClient(this.id)
-          .subscribe((data: Client) => {
-            this.clientEditForm = this.initForm(data);
-          });
-        } else {
-          this.clientEditForm = this.initForm();
-        }
-      })
+      this.clientEditForm = this.initForm();
   }
 
   ngOnInit() {
+    this.routeSub$ = this.activatedRoute.params.subscribe((params: any) => {
+      const id = params['id'];
+      if (id) {
+        this.store.dispatch(new actions.GetClientAction(id));
+        this.clientSub$ = this.store.select(fromClientSelector.getSelectedClient).subscribe((data) => {
+          this.clientEditForm = this.initForm(data);
+        })
+      }
+    });
   }
 
   initForm(data?: Client) {
+    const id = data ? data.id : '';
     const companyName = data ? data.name : '';
     const contactPerson = data ? data.contactPerson : '';
     const contactEmail = data ? data.contactEmail : '';
     const contactPhone = data ? data.contactPhone : '';
-    return this.formGroup.group({
-      companyName: [companyName, Validators.required],
+
+    return this.fb.group({
+      id: [id],
+      name: [companyName, Validators.required],
       contactPerson: [contactPerson, Validators.required],
       // tslint:disable-next-line:max-line-length
       // tslint:disable-next-line:quotemark
@@ -59,7 +68,8 @@ export class ClientEditComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.clientSub$.unsubscribe();
+    this.routeSub$.unsubscribe();
   }
 
   onCancel() {
@@ -71,7 +81,11 @@ export class ClientEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-      this.clientService.saveClientData(this.clientEditForm.value);
+      this.isFormSubmit = true;
+      if (this.clientEditForm.invalid) {
+        return;
+      }
+      this.store.dispatch( new actions.SaveDataAction(this.clientEditForm.value));
       this.router.navigate(['/client']);
   }
 

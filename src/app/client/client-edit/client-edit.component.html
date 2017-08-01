@@ -1,30 +1,27 @@
-
 <div class = "list">
-
-<button class = "button-back" (click)="goBack()">Back</button>
-
-<form [formGroup]="clientEditForm">
-  <div>
-    <label for="companyName">ClientName</label>
-    <input type="text" formControlName = "companyName">
-    <p *ngIf="clientEditForm.get('companyName').errors" ></p>
+  <button class = "button-back" (click)="goBack()">Back</button>
+  <form [formGroup]="clientEditForm">
+    <div>
+      <label for="companyName">ClientName</label>
+      <input id="companyName" type="text" formControlName = "name">
+      <p *ngIf="clientEditForm.get('name').invalid && (clientEditForm.get('name').touched || isFormSubmit)">Name is Required</p>
+    </div>
+    <div>
+      <label for="contactPerson">ContactPerson</label>
+      <input id="contactPerson" type="text" formControlName = "contactPerson">
+      <p *ngIf="clientEditForm.get('contactPerson').invalid && (clientEditForm.get('contactPerson').touched || isFormSubmit)">Contact person is required</p>
   </div>
-  <div>
-    <label for="contactPerson">ContactPerson</label>
-    <input type="text" formControlName = "contactPerson">
-    <p *ngIf="clientEditForm.get('contactPerson').errors" ></p>
- </div>
-  <div>
-    <label for="contactEmail">ContactEmail</label>
-    <input type="text" formControlName = "contactEmail">
-    <p *ngIf="clientEditForm.get('contactEmail').errors" ></p>
-  </div>
-  <div>
-    <label for="contactPhone" >ContactPhone</label>
-    <input type="text" formControlName = "contactPhone">
-    <p *ngIf="clientEditForm.get('contactPhone').errors" ></p>
-  </div>
-  <button class = "submit" type = "submit" (click)="onSubmit()" [disabled]="!clientEditForm.valid">Save</button>
-  <button (click) = "onCancel()">Cancel</button>
-</form>
+    <div>
+      <label for="contactEmail">ContactEmail</label>
+      <input id="contactEmail" type="text" formControlName = "contactEmail">
+      <p *ngIf="clientEditForm.get('contactEmail').invalid && (clientEditForm.get('contactEmail').touched || isFormSubmit)">Email is invalid</p>
+    </div>
+    <div>
+      <label for="contactPhone" >ContactPhone</label>
+      <input id="contactPhone" type="text" formControlName = "contactPhone">
+      <p *ngIf="clientEditForm.get('contactPhone').invalid && (clientEditForm.get('contactPhone').touched || isFormSubmit)">Phone is required</p>
+    </div>
+    <button class="submit" type="button" (click)="onSubmit()">Save</button>
+    <button (click) = "onCancel()">Cancel</button>
+  </form>
 </div>

@@ -8,7 +8,7 @@
     <tr *ngFor="let item of clientData" style="width:50%">
       <td>{{ item.name }}</td>
       <td><a [routerLink]="['edit', item.id]">Edit</a></td>
-      <td><a [routerLink]="['view', item.id]">View </a></td>
+      <td><a [routerLink]="['view', item.id]">View</a></td>
     </tr>
   </table>
 </div>

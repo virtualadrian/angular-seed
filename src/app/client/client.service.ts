@@ -29,25 +29,13 @@ export class ClientService {
     return Observable.of(clientdata[0]);
   }
 
-  saveClientData(addData) {
-    const data = this.clientData.find((x) => x.name === addData['companyName']);
-    if (data) {
-      const index = this.clientData.indexOf(data);
-      this.clientData[index].name = addData['companyName'];
-      this.clientData[index].contactEmail = addData['contactEmail'];
-      this.clientData[index].contactPerson = addData['contactPerson'];
-      this.clientData[index].contactPhone = addData['contactPhone'];
-    } else {
-      const id: string = this.clientData[this.clientData.length - 1].id;
-      const model: Client = {id: null, name: '', contactPerson: '', contactEmail: '', contactPhone: ''}
-      model.id = id + 1;
-      model.name = addData['companyName'];
-      model.contactEmail = addData['contactEmail'];
-      model.contactPerson = addData['contactPerson'];
-      model.contactPhone = addData['contactPhone'];
 
-      this.clientData.push(model);
-    }
+  saveClientData(addData: Client) {
+    const length = this.clientData.length;
+    addData.id = String(length + 1);
+    this.clientData.push(addData);
+
+    return Observable.of(addData);
   }
 
 }

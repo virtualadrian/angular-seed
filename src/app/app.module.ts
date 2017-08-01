@@ -65,7 +65,9 @@ import { EffectsModule } from '@ngrx/effects';
      *
      * See: https://github.com/zalmoxisus/redux-devtools-extension
      */
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreDevtoolsModule.instrument({
+      maxAge: 5
+    }),
   ],
   providers: [
   ],

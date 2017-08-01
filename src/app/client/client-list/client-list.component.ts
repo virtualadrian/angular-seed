@@ -17,6 +17,7 @@ import { Store } from '@ngrx/store';
 export class ClientListComponent implements OnInit {
 
   clientData$: Observable<Client[]>;
+
   constructor(private store: Store<fromClient.State>, private router: Router) {
     this.clientData$ = this.store.select(fromClientSelector.getClients);
   }

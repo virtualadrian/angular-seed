@@ -1,3 +1,4 @@
+import { Map, fromJS } from 'immutable';
 import { Client } from 'app/client/client';
 import * as clientActions from './../actions/actions';
 import { ClientStateRecord, IClientState } from './../states/client.state';
@@ -14,7 +15,6 @@ export function ClientReducer(
       const entities = state.clientEntities;
       const id = action.payload.id;
       const client = action.payload;
-
       return state.merge({
         clientIds: ids.push(action.payload.id),
         clientEntities: entities.merge({ [id]: client }),
@@ -31,6 +31,7 @@ export function ClientReducer(
           [client.id]: client
         });
       }, { });
+
       return state.merge({
         clientIds: clientIds,
         clientEntities: clientEntities
@@ -38,16 +39,28 @@ export function ClientReducer(
     }
 
     case clientActions.SAVE_CLIENT_DATA_SUCCESS: {
-      const ids = state.clientIds;
+
+      let ids = state.clientIds;
       const entities = state.clientEntities;
       const id = action.payload.id;
       const client = action.payload;
 
+      ids = ids.push(id);
+
+      const newEntity = Map({
+        [id]: client
+      })
+
+      const newEntities = entities.merge(newEntity);
+
       return state.merge({
-        clientIds: ids.push(id),
-        clientEntities: entities.merge({ [id]: client })
-      }) as IClientState
+        clientIds: ids,
+        clientEntities: newEntities,
+        selectedClient: fromJS({})
+      }) as IClientState;
+      // return;
     }
+
     default:
       return state;
   }
@@ -56,6 +69,6 @@ export function ClientReducer(
 
 export const getEntities = (state: IClientState) => state.clientEntities.toJS();
 export const getIds = (state: IClientState) => state.clientIds.toJS();
-export const getSelectedClient = (state: IClientState) => state.selectedClient;
+export const getSelectedClient = (state: IClientState) => state.selectedClient.toJS();
 export const getSelectedClientId = (state: IClientState) => state.selectedClientId;
 
