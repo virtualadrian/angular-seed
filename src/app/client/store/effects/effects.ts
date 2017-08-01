@@ -15,7 +15,7 @@ export class ClientEffects {
   @Effect()
   GetAllClients$: Observable<Action> = this.actions$
     .ofType(clientAction.GET_ALL_CLIENTS)
-    .switchMap((action: clientAction.GetAllClientsAction) => this.clientService.getClients())
+    .switchMap((action: Action) => this.clientService.getClients())
     .map((data) => new clientAction.GetAllClientsSuccessAction(data))
 
   // tslint:disable-next-line:member-ordering

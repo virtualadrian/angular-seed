@@ -1,6 +1,6 @@
+import { AppState } from './../../interfaces';
+import { IClientState } from 'app/client/store/states/client.state';
 import { GetClientAction } from './../store/actions/actions';
-import { ClientState } from './../store/reducers/index';
-import * as fromClient from './../store/reducers/index';
 import * as fromClientSelector from './../store/reducers/selector';
 import * as actions from 'app/client/store/actions/actions';
 import { Store } from '@ngrx/store';
@@ -31,7 +31,7 @@ export class ClientEditComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private location: Location,
-    private store: Store<fromClient.ClientState>
+    private store: Store<AppState>,
   ) {
       this.clientEditForm = this.initForm();
   }
@@ -68,7 +68,9 @@ export class ClientEditComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.clientSub$.unsubscribe();
+    if (this.clientSub$) {
+      this.clientSub$.unsubscribe();
+    }
     this.routeSub$.unsubscribe();
   }
 

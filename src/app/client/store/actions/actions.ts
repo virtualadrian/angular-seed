@@ -20,7 +20,7 @@ export class GetClientSuccessAction implements Action {
 
 export class GetAllClientsAction implements Action {
   readonly type = GET_ALL_CLIENTS;
-  constructor() { }
+  constructor( ) { }
 }
 
 export class GetAllClientsSuccessAction implements Action {

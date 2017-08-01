@@ -1,6 +1,6 @@
+import { AppState } from './../../interfaces';
 import * as fromClientSelector from './../store/reducers/selector';
 import { GetAllClientsAction } from './../store/actions/actions';
-import * as fromClient from './../store/reducers/index';
 import * as actions from 'app/client/store/actions/actions';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -18,7 +18,7 @@ export class ClientListComponent implements OnInit {
 
   clientData$: Observable<Client[]>;
 
-  constructor(private store: Store<fromClient.State>, private router: Router) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.clientData$ = this.store.select(fromClientSelector.getClients);
   }
 

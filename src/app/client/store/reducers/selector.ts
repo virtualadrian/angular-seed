@@ -1,12 +1,13 @@
-import { ClientState } from './index';
+import { AppState } from './../../../interfaces';
 import { createSelector } from 'reselect';
 import { Map, List, fromJS } from 'immutable';
 import { IClientState } from 'app/client/store/states/client.state';
-import { createFeatureSelector } from '@ngrx/store';
 import * as fromClient from './clients';
 
 // Base client state selector funtion
-export const getClientState = createFeatureSelector<IClientState>('clients');
+export function getClientState (state: AppState ): IClientState {
+  return state.clients
+}
 
 // ******************** Individual selectors ***************************
 export const getIClientState = createSelector(

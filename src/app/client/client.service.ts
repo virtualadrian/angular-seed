@@ -38,4 +38,8 @@ export class ClientService {
     return Observable.of(addData);
   }
 
+  updateData() {
+
+  }
+
 }
