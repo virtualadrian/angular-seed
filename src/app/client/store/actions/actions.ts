@@ -7,6 +7,8 @@ export const GET_ALL_CLIENTS = 'GET_ALL_CLIENTS';
 export const GET_ALL_CLIENTS_SUCCESS = 'GET_ALL_CLIENTS_SUCCESS';
 export const SAVE_CLIENT_DATA = 'SAVE_CLIENT_DATA';
 export const SAVE_CLIENT_DATA_SUCCESS = 'SAVE_CLIENT_DATA_SUCCESS';
+export const UPDATE_DATA = 'UPDATE_DATA';
+export const UPDATE_DATA_SUCCESS = 'UPDATE_DATA_SUCCESS';
 
 export class GetClientAction implements Action {
   readonly type = GET_CLIENT;
@@ -38,6 +40,16 @@ export class SaveDataSuccessAction implements Action {
   constructor( public payload: Client ) { }
 }
 
+export class UpdateDataAction implements Action {
+  readonly type = UPDATE_DATA;
+  constructor( public payload: Client) {}
+}
+
+export class UpdateDataSuccessAction implements Action {
+  readonly type = UPDATE_DATA_SUCCESS;
+  constructor( public payload: Client) {}
+}
+
 export type Actions =
   GetClientAction
   | GetClientSuccessAction
@@ -45,4 +57,6 @@ export type Actions =
   | GetAllClientsSuccessAction
   | SaveDataAction
   | SaveDataSuccessAction
+  | UpdateDataAction
+  | UpdateDataSuccessAction
 

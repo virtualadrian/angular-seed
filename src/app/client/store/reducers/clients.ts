@@ -58,7 +58,28 @@ export function ClientReducer(
         clientEntities: newEntities,
         selectedClient: fromJS({})
       }) as IClientState;
-      // return;
+    }
+
+    case clientActions.UPDATE_DATA_SUCCESS: {
+
+      let ids = state.clientIds;
+      const entities = state.clientEntities;
+      const id = action.payload.id;
+      const client = action.payload;
+
+      ids = ids.push(id);
+
+      const newEntity = Map({
+        [id]: client
+      })
+
+      const newEntities = entities.merge(newEntity);
+
+      return state.merge({
+        clientIds: ids,
+        clientEntities: newEntities,
+        selectedClient: fromJS({})
+      }) as IClientState;
     }
 
     default:

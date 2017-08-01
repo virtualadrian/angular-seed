@@ -87,7 +87,11 @@ export class ClientEditComponent implements OnInit, OnDestroy {
       if (this.clientEditForm.invalid) {
         return;
       }
-      this.store.dispatch( new actions.SaveDataAction(this.clientEditForm.value));
+      if ( this.router.url === '/client/new') {
+        this.store.dispatch( new actions.SaveDataAction(this.clientEditForm.value));
+      } else {
+        this.store.dispatch( new actions.UpdateDataAction (this.clientEditForm.value));
+      }
       this.router.navigate(['/client']);
   }
 

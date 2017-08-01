@@ -32,4 +32,12 @@ export class ClientEffects {
     .switchMap((action: clientAction.SaveDataAction) => this.clientService.saveClientData(action.payload))
     .map((data) => new clientAction.SaveDataSuccessAction(data));
 
+
+  // tslint:disable-next-line:member-ordering
+  @Effect()
+  UpdateClient$: Observable<Action> = this.actions$
+    .ofType(clientAction.UPDATE_DATA)
+    .switchMap((action: clientAction.UpdateDataAction) => this.clientService.updateData(action.payload))
+    .map((data) => new clientAction.UpdateDataSuccessAction(data));
+
 }

@@ -38,8 +38,16 @@ export class ClientService {
     return Observable.of(addData);
   }
 
-  updateData() {
+  updateData(updateData: Client) {
+    const data = this.clientData.find( (x) => x.id === updateData.id )
+    data.name = updateData.name;
+    data.contactEmail = updateData.contactEmail;
+    data.contactPerson = updateData.contactPerson;
+    data.contactPhone = updateData.contactPhone;
+    this.clientData[this.clientData.indexOf(data)] = data;
 
+    return Observable.of(data);
   }
+
 
 }
